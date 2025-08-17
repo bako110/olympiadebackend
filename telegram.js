@@ -6,8 +6,8 @@ const TELEGRAM_BOT_TOKEN = '8496672631:AAGhLSZLJ0rkWB04Wy5etdLeaRaBpI6a6lU';
 
 // Liste des destinataires : usernames ou chat_id (numéros ou groupes)
 const TELEGRAM_RECIPIENTS = [
-    '8173158426',       // ton chat_id perso
-   
+    '8173158426', // Robert Bako
+    '7412200515', // Ibrahim Sawadogo
 ];
 
 async function sendTelegramMessage(message) {
