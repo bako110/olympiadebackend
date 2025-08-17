@@ -13,8 +13,6 @@ exports.createInscription = async (req, res) => {
       playerList,
       duoNames,
       soloName,
-      ville,
-      email
     } = req.body;
 
     // Normaliser les listes
@@ -45,9 +43,7 @@ exports.createInscription = async (req, res) => {
       teamName: teamName || undefined,
       playerList: playersArray.length ? playersArray : undefined,
       duoNames: duoArray.length ? duoArray : undefined,
-      soloName: soloName || undefined,
-      ville,
-      email
+      soloName: soloName || undefined
     });
 
     await inscription.save();
@@ -66,7 +62,6 @@ exports.createInscription = async (req, res) => {
     // Construire le message Telegram
     let message = `<b>Nouvelle inscription !</b>\n`;
     message += `<b>Discipline :</b> ${discipline}\n`;
-    if (ville) message += `<b>Ville :</b> ${ville}\n`;
     message += `<b>Montant :</b> ${price} FCFA\n`;
     message += `<b>Téléphone :</b> ${telephone}\n`;
 
