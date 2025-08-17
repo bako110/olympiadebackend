@@ -52,7 +52,18 @@ exports.createInscription = async (req, res) => {
 
     await inscription.save();
 
-    // Préparer le message Telegram en n'ajoutant que les champs renseignés
+    // Récupérer les statistiques d’inscriptions par discipline
+    const stats = await Inscription.aggregate([
+      {
+        $group: {
+          _id: { discipline: "$discipline", disciplineType: "$disciplineType" },
+          total: { $sum: 1 }
+        }
+      },
+      { $sort: { "_id.discipline": 1 } }
+    ]);
+
+    // Construire le message Telegram
     let message = `<b>Nouvelle inscription !</b>\n`;
     message += `<b>Discipline :</b> ${discipline}\n`;
     if (ville) message += `<b>Ville :</b> ${ville}\n`;
@@ -68,6 +79,12 @@ exports.createInscription = async (req, res) => {
     } else if (disciplineType === 'solo') {
       if (soloName) message += `<b>Participant :</b> ${soloName}\n`;
     }
+
+    // Ajouter le récapitulatif
+    message += `\n<b>📊 Récapitulatif des inscriptions :</b>\n`;
+    stats.forEach(s => {
+      message += `- ${s._id.discipline} (${s._id.disciplineType}) : ${s.total}\n`;
+    });
 
     // Envoyer le message sur Telegram
     sendTelegramMessage(message);
