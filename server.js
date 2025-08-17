@@ -7,7 +7,7 @@ connectDB(); // connexion à la DB
 
 // Autoriser les requêtes depuis ton frontend
 app.use(cors({
-  origin: 'http://127.0.0.1:5501', // remplacer par l'URL de ton frontend si différente
+  origin: 'https://olympiade-du-faso.onrender.com', // remplacer par l'URL de ton frontend si différente
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
